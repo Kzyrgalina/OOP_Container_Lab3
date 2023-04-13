@@ -30,33 +30,52 @@ int main() {
 	int count = 100;
 	double timer = 0;
 	clock_t start = clock();
+	int addCount = 0;
+	int delCount = 0;
+	int setCount = 0;
+	int getCount = 0;
 	
 	while (count < 10001){
 		for (int i = 0; i < count; i++) {
-			switch (rand() % 4) {
+			//container.addObject(rand() % container.getSize(), new ChildClass()); // добавление элемента
+			//std::cout << "addObject" << "\n";
+			//addCount++;
+			switch (rand() % 2) {
 			case 0:
 				container.addObject(rand() % container.getSize(), new ChildClass()); // добавление элемента
 				std::cout << "addObject" << "\n";
+				addCount++;
 				break;
 			case 1:
-				container.deleteObject(rand() % container.getSize()); // удаление
-				std::cout << "deleteObject" << "\n";
-				break;
-			case 2:
-				container.setObject(rand() % container.getSize(), new ChildClass()); // setter
-				std::cout << "setObject" << "\n";
-				break;
-			case 3:
-				container.getObject(rand() % container.getSize()); // getter
-				std::cout << "getObject" << "\n";
-				break;
+				switch (rand() % 3){
+				case 0:
+					container.setObject(rand() % container.getSize(), new ChildClass()); // setter
+					std::cout << "setObject" << "\n";
+					setCount++;
+					break;
+				case 1:
+					container.getObject(rand() % container.getSize()); // getter
+					std::cout << "getObject" << "\n";
+					getCount++;
+					break;
+				case 2:
+					container.deleteObject(rand() % container.getSize()); // удаление
+					std::cout << "deleteObject" << "\n";
+					delCount++;
+					break;
+				
+				}
 			}
 		}
 		clock_t end = clock();
 		timer += (double)(end - start) / CLOCKS_PER_SEC;
 		std::cout.precision(15);
 		std::cout.setf(std::ios::showpoint);
-		std::cout << count << "		" << timer << "\n";
+		std::cout << count << "\t" << timer << "\t"<< "Size: " << container.getSize() << "\n";
+		std::cout << "addOBJ: " << addCount << "\t";
+		std::cout << "delOBJ: " << delCount << "\t";
+		std::cout << "setOBJ: " << setCount << "\t";
+		std::cout << "getOBJ: " << getCount << "\t";
 		system("pause");
 		count *= 10;
 	}
